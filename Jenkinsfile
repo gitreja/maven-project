@@ -1,20 +1,22 @@
 pipeline {
     agent any
+
+
     stages {
-        stage('clone my code'){
-          git 'https://github.com/gitreja/maven-project'
-           }
-        stage ('complie my code'){
-            
-            steps{
-                withmaven(maven :'localmaven') {
-                    sh 'mvn compile'
-                    
+        stage('SCM Checkout'){
+          git 'https://github.com/prakashk0301/maven-project'
+        }
+  }
+    {
+        stage ('Compile Stage') {
+
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn clean compile'
                 }
             }
-        }
-    }
-}               
-                
+}
+}
+}            
 
          
