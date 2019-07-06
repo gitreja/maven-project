@@ -6,7 +6,6 @@ pipeline {
         stage('SCM Checkout'){
           git 'https://github.com/prakashk0301/maven-project'
         }
-  }
         stage ('Compile Stage') {
             steps {
                 withMaven(maven : 'localmaven') {
@@ -20,6 +19,7 @@ pipeline {
                     sh 'mvn clean test'
                 }
             }
+    }
     }
 }
 
