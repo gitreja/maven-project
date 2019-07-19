@@ -27,7 +27,8 @@ pipeline {
             }
         }
     }
-  stage ('build'){
+    {
+  stage ('build && sonarqube analysis'){
       steps{
            withSonarQubeEnv('sonar') {
             withMaven(maven: 'localmaven'){
@@ -36,6 +37,7 @@ pipeline {
            }
       }
   }
+    }
  
   {
     stage ('install') {
