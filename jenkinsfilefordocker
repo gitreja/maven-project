@@ -5,4 +5,13 @@ stage('scm checkout'){
 
 git 'https://github.com/gitreja/maven-project.git'
 }
+
+stage('package stage'){
+
+sh label: '', script: 'mvn clean package'
+}
+
+stage ('docker image build') {
+sh 'docker build -t reshmaj/reshma-app:1.0.0 .'
+}
 }
