@@ -14,4 +14,10 @@ sh label: '', script: 'mvn clean package'
 stage ('docker image build') {
 sh 'docker build -t reshmaj/reshma-app:1.0.0 .'
 }
+stage ('push image to dockerhub') {
+withCredentials([usernamePassword(credentialsId: 'dockerHubaccount', passwordVariable: 'dockerHubaccount', usernameVariable: 'dockerHubaccount')]) {
+  sh "docker login -u reshmaj -p ${dockerHubaccount}"  
+}
+sh 'docker push reshmaj/reshma-app:1.0.0'
+}
 }
