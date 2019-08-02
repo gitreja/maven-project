@@ -20,4 +20,15 @@ withCredentials([usernamePassword(credentialsId: 'dockerHubaccount', passwordVar
 }
 sh 'docker push reshmaj/reshma-app:1.0.0'
 }
+stage ('push image to dockerhub') {
+withCredentials([usernamePassword(credentialsId: 'dockerHubaccount', passwordVariable: 'dockerHubaccount', usernameVariable: 'dockerHubaccount')]) {
+  sh "docker login -u reshmaj -p ${dockerHubaccount}"  
+}
+sh 'docker push reshmaj/reshma-app:1.0.0'
+}	
+stage ('Deploy to dev')
+def dockerrun = 'docker run -d p9000:8080 --name my-tomcat-app reshmaj/reshma-app:1.0.0'
+sshagent(['deploy-to-dev-docker']) {
+    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.126.211.216 ${dockerrun}"
+}
 }
