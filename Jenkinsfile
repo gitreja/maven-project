@@ -11,7 +11,7 @@ pipeline {
         stage ('Compile Stage') {
             agent { label 'maven' }
             steps {
-                withMaven(maven : 'localmaven') {
+                withMaven(maven : 'maven') {
                     sh 'mvn clean compile'
                   
                 }
@@ -21,7 +21,7 @@ pipeline {
     {
     stage ('Test') {
            steps {
-                withMaven(maven : 'localmaven') {
+                withMaven(maven : 'maven') {
                     sh 'mvn clean test'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
   stage ('build && sonarqube analysis'){
       steps{
            withSonarQubeEnv('sonar') {
-            withMaven(maven: 'localmaven'){
+            withMaven(maven: 'maven'){
             sh 'mvn clean package sonar:sonar'
             }
            }
